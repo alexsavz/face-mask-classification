@@ -1,0 +1,7 @@
+# Virtualenv
+FaceMask/
+__pycache__/
+# Formatter
+.vscode/
+# large files
+models/

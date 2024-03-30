@@ -4,6 +4,6 @@ __pycache__/
 # Formatter
 .vscode/
 # large files
-models/
+pymodels/
 # path
 configs/config.yaml

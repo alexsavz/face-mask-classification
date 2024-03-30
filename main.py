@@ -1,14 +1,21 @@
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 
-from src.evaluate import (
+import src.data.configs as configs
+from src.models.evaluate import (
     read_image,
     preprocess,
     predict,
     get_prediction_model,
-    #download_model_from_azure_blob,
+    # download_model_from_azure_blob,
 )
+
+config = configs.import_yaml_config("./configs/config.yaml")
+URL_1 = config["path"]["origins"]["local_1"]
+URL_2 = config["path"]["origins"]["local_2"]
+URL_3 = config["path"]["origins"]["vercel_app"]
 
 vit_model = None
 
@@ -30,12 +37,23 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 
+# Cross-Origin Resource Sharing config
+
+origins = [URL_1, URL_2, URL_3]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
 
-
+# Image envoyée à la route /api/predict pour obtenir une prédiction 
 @app.post("/api/predict")
 async def predict_image(file: UploadFile):
     # Lire l'image du fichier temporaire

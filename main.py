@@ -30,15 +30,14 @@ async def lifespan(app: FastAPI):
     # download_model_from_azure_blob(
     #     storage_connection_string, container_name, blob_name, local_file_name
     # )
-    global vit_model  # Utiliser le mot-clé global pour modifier la variable globale
-    vit_model = get_prediction_model("models/best_model1.pt")
+    global vit_model  # le mot-clé global modifie la variable globale
+    vit_model = get_prediction_model("pymodels/best_model1.pt")
     yield
 
 
 app = FastAPI(lifespan=lifespan)
 
 # Cross-Origin Resource Sharing config
-
 origins = [URL_1, URL_2, URL_3]
 app.add_middleware(
     CORSMiddleware,
@@ -51,7 +50,7 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Message": "Hello world"}
 
 # Image envoyée à la route /api/predict pour obtenir une prédiction 
 @app.post("/api/predict")

@@ -3,38 +3,32 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
+# Importing necessary configurations and functions
 import src.data.configs as configs
 from src.models.evaluate import (
     read_image,
     preprocess,
     predict,
     get_prediction_model,
-    # download_model_from_azure_blob,
 )
 
+# Importing YAML configuration file
 config = configs.import_yaml_config("./configs/config.yaml")
 URL_1 = config["path"]["origins"]["local_1"]
 URL_2 = config["path"]["origins"]["local_2"]
 URL_3 = config["path"]["origins"]["vercel_app"]
 
+# Global variable to store the model
 vit_model = None
 
-
+# Async context manager for application lifespan
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Utilisation des fonctions
-    # storage_connection_string = "BlobEndpoint=https://facemask2477918544.blob.core.windows.net/;QueueEndpoint=https://facemask2477918544.queue.core.windows.net/;FileEndpoint=https://facemask2477918544.file.core.windows.net/;TableEndpoint=https://facemask2477918544.table.core.windows.net/;SharedAccessSignature=sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-12-05T06:39:11Z&st=2023-12-04T22:39:11Z&spr=https&sig=1COs7OvSKGEROzBdAg9C0j22Dp3OKAzj5vH1DzADuY0%3D"
-    # container_name = "facemask"
-    # blob_name = "best_model1.pt"
-    # local_file_name = "modele_local.pt"
-    # download_model_from_azure_blob(
-    #     storage_connection_string, container_name, blob_name, local_file_name
-    # )
     global vit_model  # le mot-clé global modifie la variable globale
     vit_model = get_prediction_model("pymodels/best_model1.pt")
     yield
 
-
+# Creating the FastAPI application instance with lifespan management
 app = FastAPI(lifespan=lifespan)
 
 # Cross-Origin Resource Sharing config
@@ -47,20 +41,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
+# Root endpoint to verify the application is running
 @app.get("/")
 def read_root():
     return {"Message": "Hello world"}
 
-# Image envoyée à la route /api/predict pour obtenir une prédiction 
+# Endpoint to receive an image and obtain predictions
 @app.post("/api/predict")
 async def predict_image(file: UploadFile):
-    # Lire l'image du fichier temporaire
+    # Reading the image from the temporary file
     contents = await file.read()
-    # Read image
+    # Reading image
     image = read_image(contents)
-    # Preprocess image
+    # Preprocessing image
     image = preprocess(image)
-    # Predict
+    # Making prediction
     predictions = predict(image, vit_model)
     return predictions

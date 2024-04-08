@@ -1,44 +1,41 @@
 <h1 align="center">Projet de classification d'image par un modèle de deep-learning</h1>
 <h1 align="center">Détecter le port du masque chirurgical</h1>
 
-<p align="center">
-  <a href="https://github.com/alexsavz/savina_alex_rendu_projet3/actions/workflows/ci.yaml">
-    <img src="https://github.com/alexsavz/savina_alex_rendu_projet3/actions/workflows/ci.yaml/badge.svg" alt="Build, test and push"/>
-  </a>
-</p>
-
-<p align="center"><i>Modèle de machine learning : lightGBM</i></p>
-
 <h2 align="center">Dataset</h2>
 
-<p align="center"><i>Telco costumer churn</i></p>
+<p align="center"><a href="https://www.kaggle.com/datasets/dhruvmak/face-mask-detection"><i>https://www.kaggle.com/datasets/dhruvmak/face-mask-detection</i></a></p>
 
 <h2 align="center">Problématique</h2>
 
 <p align="center">
 <b>Contexte :</b>
-<br>- Domaine de la télécommunication, mission avec l'équipe marketing
-<br>- Identifier les clients fragiles et décrire leur profil
-<br>- Extraire les variables les plus pertinentes à partir des données clients
+<br>- Data Scientist travaillant sur les systèmes de reconnaissance faciale
+<br>- Faciliter l’enregistrement et l’embarquement des passagers pour Paris aéroport
+<br>- Vérifier si le passager porte un masque chirurgical
 </p>
 
 <p align="center">
 <b>Mission :</b>
-<br>- Réaliser une analyse exploratoire
-<br>- Réaliser une analyse prédictive
-<br>- Concevoir un projet portable et reproductible
-<br>- Réaliser un dashboard intéractif
+<br>- Réaliser un premier modèle de détection
+<br>- Déployer une application
 </p>
 
-<h2 align="center">Dashboard</h2>
+<p align="center"><i>Modèle de machine learning : lightGBM</i></p>
+
+<h2 align="center">Application front-end</h2>
 <table align="center">
   <tr>
     <td align="center" valign="top">
-      Dashboard intéractif <br/>
-      <a href="https://alexsavina-scoring-clientfragile.streamlit.app/">https://alexsavina-scoring-clientfragile.streamlit.app/</a> <br/><br>
-      <a href="https://alexsavina-scoring-clientfragile.streamlit.app/">
-        <img alt="Todo App" src="/frontend/assets/dashboard-min.png" width="200px" style="max-width:100%; border-radius: 10px;"/>
+      Interface web<br/>
+      <a href="https://face-mask-classification-front-alexsavina.vercel.app">https://face-mask-classification-front-alexsavina.vercel.app</a> <br/><br>
+      Repo github<br/>
+      <a href="https://github.com/alexsavz/FaceMaskClassification-front">Application front-end</a> <br/><br>
+      <a href="https://face-mask-classification-front-alexsavina.vercel.app">
+        <img alt="Face Mask detection" src="/assets/front_app_screen.png" width="300px" style="max-width:100%; border-radius: 10px;"/>
       </a>
+      <br>
+      Repo github<br/>
+      <a href="https://github.com/alexsavz/FaceMaskClassification-front">Application front-end</a> <br/>
     </td>
   </tr>
 </table>

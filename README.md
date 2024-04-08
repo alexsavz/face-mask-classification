@@ -5,22 +5,9 @@
 
 <p align="center"><a href="https://www.kaggle.com/datasets/dhruvmak/face-mask-detection"><i>https://www.kaggle.com/datasets/dhruvmak/face-mask-detection</i></a></p>
 
-<h2 align="center">Problématique</h2>
+<h2 align="center">Modèles utilisés</h2>
 
-<p align="center">
-<b>Contexte :</b>
-<br>- Data Scientist travaillant sur les systèmes de reconnaissance faciale
-<br>- Faciliter l’enregistrement et l’embarquement des passagers pour Paris aéroport
-<br>- Vérifier si le passager porte un masque chirurgical
-</p>
-
-<p align="center">
-<b>Mission :</b>
-<br>- Réaliser un premier modèle de détection
-<br>- Déployer une application
-</p>
-
-<p align="center"><i>Modèle de machine learning : lightGBM</i></p>
+![Choix du modèle!](/assets/models.png "Description des modèles")
 
 <h2 align="center">Application front-end</h2>
 <table align="center">
@@ -28,45 +15,91 @@
     <td align="center" valign="top">
       Interface web<br/>
       <a href="https://face-mask-classification-front-alexsavina.vercel.app">https://face-mask-classification-front-alexsavina.vercel.app</a> <br/><br>
-      Repo github<br/>
-      <a href="https://github.com/alexsavz/FaceMaskClassification-front">Application front-end</a> <br/><br>
       <a href="https://face-mask-classification-front-alexsavina.vercel.app">
         <img alt="Face Mask detection" src="/assets/front_app_screen.png" width="300px" style="max-width:100%; border-radius: 10px;"/>
       </a>
       <br>
-      Repo github<br/>
-      <a href="https://github.com/alexsavz/FaceMaskClassification-front">Application front-end</a> <br/>
+      Repo git<br/>
+      <a href="https://github.com/alexsavz/FaceMaskClassification-front">github.com/alexsavz/FaceMaskClassification-front</a> <br/>
     </td>
   </tr>
 </table>
 
-## Tech stack
+## Problématique
 
-**Analyse des données:** pandas, numpy, scipy
-**Représentation graphique:** matplotlib, seaborn, plotly
-**Modelisation:** scikit-learn, lightgbm, shap
-**Mise en production:** Docker, Github Actions, mlflow, Streamlit
+Contexte :
 
-## Notebook
+- Data Scientist travaillant sur les systèmes de reconnaissance faciale
+- Faciliter l’enregistrement et l’embarquement des passagers pour Paris aéroport
+- Vérifier si le passager porte un masque chirurgical
 
-1. Exploration du jeu de données
-   - Description des données
-   - Contrôle de la qualité des données
-   - Analyse exploratoire
-   - Présélection de variables
-2. Création et optimisation du modèle
-   - Préprocessing des données d'évaluation
-   - Pipeline de transformation
-   - Optimisation du modèle
-3. Evaluation et explicativité des modèles
-   - Courbe de lift
-   - Score de spiegelhalter
-   - Courbe de calibration
-   - Importance des variables
+Mission :
+
+- Réaliser un premier modèle de détection
+- Déployer une application
+
+## Présentation des données
+
+Le jeu de données est issu de kaggle :
+
+- Deux dossiers d'images
+
+  - **220** images de visages **sans** masques
+  - **220** images de visages **avec** masques
+
+- Données non structurées de résolutions différentes
+
+## Structure du Notebook
+
+1. Import des librairies, des données et des modèles
+   - Import du ViT et des poids
+   - Import du RegNet et des poids
+2. Préparation des données
+   - Création du Dataset
+   - Transformation et augmentation des données
+   - Division des données
+3. Transfert Learning avec un Modèle Pré-entraîné
+   - Construction du modèle à partir de la dernière couche
+   - &Eacute;tape d'entraînement
+   - &Eacute;tape de validation
+   - Entraînement du modèle sur la dernière couche
+   - Prédiction sur l'échantillon de test
+   - Gestion des hyperparamètres
 4. Sérialisation du meilleur modèle
-   - Sauvegarde locale
-   - Log du modèle avec MLflow
-5. Prédiction sur l'échantillon de test
+
+## Compilation et entraînement
+
+**Fonction de perte :**
+
+- BCEWithLogitsLoss (Binary Cross Entropy)
+- Fonction de perte adaptée à une classification binaire
+
+**Algorithme d'optimisation :**
+
+- Adam (Adaptive Moment Estimation)
+- Méthode de descente de gradient
+- (lr) γ de 1e-3, (betas) β1 de 0,9, β2 de 0,999
+- Régularisation par pénalité (weights-decay) wd de 0,1
+
+**Hyperparamètres**
+
+- Méthode d'augmentation automatique : TrivialAugment
+- Early stopping
+
+Data augmentation avec TrivialAugment :
+
+![TrivialAugment!](/assets/trivialaugment.png "TrivialAugment")
+
+Performance du Vision Transformer et early stopping :
+
+![Performance ViT!](/assets/vit_scores.png "Performance du modèle ViT")
+
+## Technologies
+
+**Manipulation des données:** numpy, scikit-learn
+**Représentation graphique:** matplotlib
+**Modelisation:** Pytorch
+**Déploiement:** FastAPI, Docker, AWS Fargate
 
 ## Réutilisation
 
